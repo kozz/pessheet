@@ -312,10 +312,11 @@ class PysApplicationWindow(wx.Frame):
         dlg = wx.MessageDialog(self,
                                "Want to exit %s?" % getApplicationName(),
                                "Exit", wx.YES_NO | wx.ICON_QUESTION)
-        if dlg.ShowModal() == wx.ID_YES:
+        response = dlg.ShowModal()
+        dlg.Destroy()
+        if response == wx.ID_YES:
             self.Destroy()
             self._call_on_destroy()
-        dlg.Destroy()
 
     def updateTitle(self):
         if self._filename:
