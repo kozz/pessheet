@@ -501,12 +501,7 @@ def main(argv):
         redirect = True
         argv.pop()
 
-    #app = wx.App()
     app = wx.App(redirect=redirect)
-
-    bmp = wx.Image('resources/pes_splash.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-    wx.SplashScreen(bmp, wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
-                    1000, None, -1)
 
     window_size = wx.GetDisplaySize()
     window_size.Scale(0.8, 0.8)
@@ -525,6 +520,10 @@ def main(argv):
                                        window_size, filename=filename,
                                        dirname=path,
                                        call_on_destroy=call_on_destroy)
+    bmp = wx.Image('resources/pes_splash.png', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+    splash = wx.SplashScreen(bmp, wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
+                             1000, main_window, -1)
+
     app.MainLoop()
 
 if __name__ == '__main__':
