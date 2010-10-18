@@ -211,6 +211,7 @@ class PysApplicationWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnEditCut, id=wx.ID_CUT)
         self.Bind(wx.EVT_MENU, self.OnEditCopy, id=wx.ID_COPY)
         self.Bind(wx.EVT_MENU, self.OnEditPaste, id=wx.ID_PASTE)
+        self.Bind(wx.EVT_MENU, self.OnEditDelete, id=wx.ID_DELETE)
         self.Bind(wx.EVT_MENU, self.OnOptions, id=wx.ID_PREFERENCES)
 
         script_page.Bind(wx.EVT_KILL_FOCUS, self.onEditorLostFocus)
@@ -266,6 +267,8 @@ class PysApplicationWindow(wx.Frame):
               (wx.ID_CUT, 'Cut\tCtrl-X', 'Cut selection into Clipboard'), 
               (wx.ID_COPY, 'Copy\tCtrl-C', 'Copy selection into Clipboard'),
               (wx.ID_PASTE, 'Paste\tCtrl-V', 'Paste the content of the Clipboard into the sheet'),
+              None, #Separator
+              (wx.ID_DELETE, 'Delete\tDelete', 'Delete selection'),
              ]
             ),
             #('&View', 
@@ -475,6 +478,12 @@ class PysApplicationWindow(wx.Frame):
         Maybe some useful stuff:
         http://74.125.77.132/search?q=cache:l8ru47_-EuAJ:www.picalo.org/download/picalo-2.32/picalo/gui/Spreadsheet.py+ID_PASTE+wx+bind+TheClipBoard+grid&hl=sv&ct=clnk&cd=1&gl=se&client=firefox-a
         """
+
+    def OnEditDelete(self, event):
+        if (wx.GetActiveWindow().FindFocus().GetParent() ==
+                self._sheet_page.grid):
+            self._sheet_page.grid.cut()
+        event.Skip()
 
     def OnOptions(self, event):
         value = '\n'.join(self._additional_paths)
